@@ -93,7 +93,7 @@ fetch('json/produtos.json')
 
     // Botão enviar Whatsapp
     const btnEnviarWhatsapp = document.getElementById('btnEnviarWhatsapp');
-    const numeroWhats = '5512996831810'; // substitua pelo seu número
+    const numeroWhats = '553597211199'; // substitua pelo seu número
 
     btnEnviarWhatsapp.addEventListener('click', () => {
       if (!nomeSelecionado.trim()) {
