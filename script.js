@@ -101,7 +101,12 @@ fetch('json/produtos.json')
         return;
       }
 
-      const mensagem = encodeURIComponent(nomeSelecionado);
+      const textoFixo = 
+      `Olá! Tudo bem? Estou interessado(a) em conferir os produtos que vocês oferecem. Poderia, por favor, me ajudar com a disponibilidade dos itens abaixo?
+`;
+      
+        const mensagemCompleta = textoFixo + nomeSelecionado;
+        const mensagem = encodeURIComponent(mensagemCompleta.trim());
       const url = `https://wa.me/${numeroWhats}?text=${mensagem}`;
       window.open(url, '_blank');
     });
