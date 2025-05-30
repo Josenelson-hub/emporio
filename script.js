@@ -1,134 +1,164 @@
 fetch('json/produtos.json')
-  .then(response => response.json())
+  .then(r => r.json())
   .then(produtos => {
     const container = document.querySelector('.produtos');
+    let nomeSelecionado = '';
+    const carrinhoQtde = {}; // armazena qtd de cada produto
 
-    produtos.forEach(produto => {
-      const produtoDiv = document.createElement('div');
-      produtoDiv.classList.add('produto');
-      produtoDiv.dataset.id = produto.classe;
-
-      const img = document.createElement('img');
-      img.classList.add('produto-img');
-      img.src = produto.img;
-      img.alt = produto.nome;
-
-      const nomeH2 = document.createElement('h2');
-      nomeH2.classList.add('nome-produto');
-      nomeH2.textContent = produto.nome;
-
-      const btnsDiv = document.createElement('div');
-      btnsDiv.classList.add('btns');
-
-      const addBtn = document.createElement('button');
-      addBtn.classList.add('add');
-      addBtn.textContent = 'Adicionar';
-
-      const removeBtn = document.createElement('button');
-      removeBtn.classList.add('remove');
-
-      const removeIcon = document.createElement('img');
-      removeIcon.classList.add('remove-icon');
-      removeIcon.src = 'img/remove.png';
-      removeIcon.alt = 'Remover';
-
-      removeBtn.appendChild(removeIcon);
-      btnsDiv.appendChild(addBtn);
-      btnsDiv.appendChild(removeBtn);
-
-      produtoDiv.appendChild(img);
-      produtoDiv.appendChild(nomeH2);
-      produtoDiv.appendChild(btnsDiv);
-
-      container.appendChild(produtoDiv);
+    // Cria os produtos
+    produtos.forEach(({classe, img, nome}) => {
+      const div = document.createElement('div');
+      div.className = 'produto';
+      div.dataset.id = classe;
+      div.innerHTML = `
+        <img class="produto-img" src="${img}" alt="${nome}">
+        <h2 class="nome-produto">${nome}</h2>
+        <div class="btns">
+          <button class="add">Adicionar</button>
+          <span class="quantidade" style="margin-left:8px;">0</span>
+        </div>
+      `;
+      container.appendChild(div);
     });
 
-    // Após criar todos os produtos, pega os elementos necessários:
-    const all = document.querySelectorAll('.produto');
-
+    const all = [...document.querySelectorAll('.produto')];
     const buttons = {
       doceBtn: document.querySelector('.doceBtn'),
       artesanalBtn: document.querySelector('.artesanalBtn'),
       queijoBtn: document.querySelector('.queijoBtn'),
-      allBtn: document.querySelector('.allBtn'),
+      allBtn: document.querySelector('.allBtn')
     };
-
     const groups = {
-      doces: document.querySelectorAll('[data-id="doces"]'),
-      outros: document.querySelectorAll('[data-id="outros"]'),
-      queijos: document.querySelectorAll('[data-id="queijos"]'),
+      doces: all.filter(p => p.dataset.id === 'doces'),
+      outros: all.filter(p => p.dataset.id === 'outros'),
+      queijos: all.filter(p => p.dataset.id === 'queijos')
     };
 
-    function filtrarGrupo(grupo) {
-      all.forEach(item => item.style.display = 'none');
-      if (grupo) {
-        grupo.forEach(item => item.style.display = 'block');
+    const filtrarGrupo = grupo => {
+      all.forEach(p => p.style.display = 'none');
+      (grupo || all).forEach(p => p.style.display = 'block');
+    };
+
+    buttons.doceBtn.onclick = () => filtrarGrupo(groups.doces);
+    buttons.artesanalBtn.onclick = () => filtrarGrupo(groups.outros);
+    buttons.queijoBtn.onclick = () => filtrarGrupo(groups.queijos);
+    buttons.allBtn.onclick = () => filtrarGrupo(null);
+
+    function atualizarQuantidadeProduto(nome) {
+      const div = all.find(p => p.querySelector('.nome-produto').textContent === nome);
+      if (!div) return;
+      const qtdSpan = div.querySelector('.quantidade');
+      const qtd = carrinhoQtde[nome] || 0;
+      if (qtd >= 1) {
+        qtdSpan.textContent = `(${qtd}x)`;
+        qtdSpan.style.display = 'inline';
+        qtdSpan.classList.add = 'formater';
       } else {
-        all.forEach(item => item.style.display = 'block');
+        qtdSpan.textContent = '';
+        qtdSpan.style.display = 'none';
+      }
+    }
+    
+    // Depois de criar produtos e adicionar ao container:
+    produtos.forEach(produto => {
+      atualizarQuantidadeProduto(produto.nome);
+    });
+    
+
+    container.onclick = e => {
+      const produto = e.target.closest('.produto');
+      if (!produto) return;
+
+      const nome = produto.querySelector('.nome-produto').textContent;
+
+      if (e.target.classList.contains('add')) {
+        nomeSelecionado += nome + '\n';
+        carrinhoQtde[nome] = (carrinhoQtde[nome] || 0) + 1;
+        atualizarQuantidadeProduto(nome);
+      }
+
+      if (e.target.closest('.remove')) {
+        if (carrinhoQtde[nome] > 0) {
+          removerNome(nome);
+          carrinhoQtde[nome]--;
+          atualizarQuantidadeProduto(nome);
+        }
+      }
+      
+    };
+
+    const modal = document.getElementById('modalOverlay');
+    const modalMensagem = document.getElementById('modalMensagem');
+    const btnFinalizar = document.getElementById('btnFinalizarPedido');
+    const carrinho = document.getElementById('carrinho');
+    const numeroWhats = '553597211199';
+
+    function removerNome(nome) {
+      const linhas = nomeSelecionado.trim().split('\n').filter(Boolean);
+      const idx = linhas.indexOf(nome);
+      if (idx > -1) {
+        linhas.splice(idx, 1);
+        nomeSelecionado = linhas.join('\n');
       }
     }
 
-    buttons.doceBtn.addEventListener('click', () => filtrarGrupo(groups.doces));
-    buttons.artesanalBtn.addEventListener('click', () => filtrarGrupo(groups.outros));
-    buttons.queijoBtn.addEventListener('click', () => filtrarGrupo(groups.queijos));
-    buttons.allBtn.addEventListener('click', () => filtrarGrupo(null));
-
-    // Variável que vai armazenar os nomes selecionados
-    let nomeSelecionado = '';
-
-    // Seleciona todos os botões adicionar
-    const botoesAdd = document.querySelectorAll('.add');
-
-    botoesAdd.forEach(botao => {
-      botao.addEventListener('click', (event) => {
-        const produto = event.target.closest('.produto');
-        if (!produto) return;
-
-        const nome = produto.querySelector('.nome-produto').textContent;
-        nomeSelecionado += nome + '\n';
-
-        console.log(nomeSelecionado);
-      });
-    });
-
-    // Botão enviar Whatsapp
-    const btnEnviarWhatsapp = document.getElementById('btnEnviarWhatsapp');
-    const numeroWhats = '553597211199'; // substitua pelo seu número
-
-    btnEnviarWhatsapp.addEventListener('click', () => {
-      if (!nomeSelecionado.trim()) {
-        alert('Nenhum produto selecionado ainda!');
+    function atualizarModal() {
+      const linhas = nomeSelecionado.trim().split('\n').filter(Boolean);
+      if (!linhas.length) {
+        modalMensagem.innerHTML = '<p>Nenhum produto selecionado.</p>';
         return;
       }
 
-      const textoFixo = 
-      `Olá! Tudo bem? Estou interessado(a) em conferir os produtos que vocês oferecem. Poderia, por favor, me ajudar com a disponibilidade dos itens abaixo?
-`;
-      
-        const mensagemCompleta = textoFixo + nomeSelecionado;
-        const mensagem = encodeURIComponent(mensagemCompleta.trim());
-      const url = `https://wa.me/${numeroWhats}?text=${mensagem}`;
-      window.open(url, '_blank');
-    });
+      const contagem = linhas.reduce((acc, item) => {
+        acc[item] = (acc[item] || 0) + 1;
+        return acc;
+      }, {});
 
-    // Botões remover
-    const botoesRemover = document.querySelectorAll('.remove');
+      modalMensagem.innerHTML = Object.entries(contagem).map(([nome, qtd]) =>
+        `<p>
+          <strong>•</strong> ${nome} (${qtd}x)
+          <button class="remove-modal" data-nome="${nome}" style="margin-left:8px; cursor:pointer; background:none; border:none;">
+            <img class="remove-icon" src="img/remove.png" alt="Remover" style="width:16px; height:16px;">
+          </button>
+        </p>`
+      ).join('');
 
-    function removerNome(nome) {
-      let linhas = nomeSelecionado.split('\n');
-      linhas = linhas.filter(linha => linha.trim() !== nome);
-      nomeSelecionado = linhas.join('\n');
-      console.log(nomeSelecionado);
+      modalMensagem.querySelectorAll('.remove-modal').forEach(btn =>
+        btn.onclick = () => {
+          const nome = btn.dataset.nome;
+          removerNome(nome);
+          carrinhoQtde[nome]--;
+          if (carrinhoQtde[nome] <= 0) delete carrinhoQtde[nome];
+          atualizarQuantidadeProduto(nome);
+          atualizarModal();
+        }
+      );
     }
 
-    botoesRemover.forEach(botao => {
-      botao.addEventListener('click', event => {
-        const produto = event.target.closest('.produto');
-        if (!produto) return;
+    btnFinalizar.onclick = () => {
+      if (Object.keys(carrinhoQtde).length === 0) {
+        alert('Seu carrinho está vazio!');
+        return;
+      }
+    
+      const textoFixo = `Olá! Tudo bem? Estou interessado(a) em conferir os produtos que vocês oferecem. Poderia, por favor, me ajudar com a disponibilidade dos itens abaixo?\n\n`;
+    
+      // Monta a lista com quantidade formatada
+      const listaProdutos = Object.entries(carrinhoQtde)
+        .map(([nome, qtd]) => `• ${nome} (${qtd}x)`)
+        .join('\n');
+    
+      const mensagem = encodeURIComponent(textoFixo + listaProdutos);
+    
+      window.open(`https://wa.me/${numeroWhats}?text=${mensagem}`, '_blank');
+    };
 
-        const nome = produto.querySelector('.nome-produto').textContent;
-        removerNome(nome);
-      });
-    });
+    carrinho.onclick = () => {
+      atualizarModal();
+      modal.style.display = 'flex';
+    };
+
+    document.getElementById('modalCloseBtn').onclick = () => modal.style.display = 'none';
+    modal.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
+    document.onkeydown = e => { if (e.key === 'Escape' && modal.style.display === 'flex') modal.style.display = 'none'; };
   })
-  .catch(err => console.error('Erro ao carregar JSON:', err));

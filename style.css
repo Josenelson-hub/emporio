@@ -163,8 +163,25 @@ footer {
   font-family: 'Palatino Linotype', serif;
 }
 
+#btnFinalizarPedido {
+  background-color: #8c6239;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 15px 25px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  box-shadow: 0 6px 12px rgba(140, 98, 57, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 999; /* para ficar sempre em cima */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 /* Botão Solicitar pedido fixo e estilizado */
-#btnEnviarWhatsapp {
+#carrinho {
   position: fixed;
   bottom: 80px; /* fica acima do footer */
   right: 20px;
@@ -184,9 +201,26 @@ footer {
   gap: 10px;
 }
 
-#btnEnviarWhatsapp:hover {
+#carrinho:hover {
   background-color: #6a4627;
   transform: scale(1.05);
+}
+
+#btnFinalizarPedido {
+  background-color: #8c6239;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 15px 25px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  box-shadow: 0 6px 12px rgba(140, 98, 57, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 999; /* para ficar sempre em cima */
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* Ajuste no mobile */
@@ -249,7 +283,7 @@ footer {
   }
 
   /* Ajuste no botão solicitar pedido no mobile */
-  #btnEnviarWhatsapp {
+  #carrinho {
     padding: 12px 20px;
     font-size: 1rem;
     bottom: 70px;
@@ -298,4 +332,124 @@ footer {
   .add {
     width: 100%;
   }
+}
+
+#modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(125, 90, 60, 0.6);
+  backdrop-filter: blur(6px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  animation: fadeInOverlay 0.4s ease forwards;
+}
+
+#modalContent {
+  background: #f9f4ec;
+  padding: 28px 36px;
+  border-radius: 16px;
+  max-width: 460px;
+  width: 90%;
+  box-shadow: 0 8px 20px rgba(125, 90, 60, 0.25);
+  position: relative;
+  font-family: 'Georgia', serif;
+  color: #5a3f1a;
+  animation: slideUp 0.4s ease forwards;
+  transform-origin: bottom center;
+  line-height: 1.5;
+  user-select: text;
+  border: 2px solid rgba(125, 90, 60, 0.15);
+}
+
+#modalTitulo {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #7d5a3c;
+  letter-spacing: 0.03em;
+  text-shadow: 1px 1px 4px rgba(125, 90, 60, 0.18);
+}
+
+#modalMensagem {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #6a4e1a;
+  margin-bottom: 28px;
+  line-height: 1.65;
+  letter-spacing: 0.025em;
+}
+
+#modalCloseBtn {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 26px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #7d5a3c;
+  transition: color 0.3s ease, transform 0.2s ease;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+#modalCloseBtn:hover,
+#modalCloseBtn:focus {
+  color: #b08968;
+  outline: none;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 4px rgba(125, 90, 60, 0.6));
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  #modalContent {
+    padding: 20px 24px;
+    max-width: 95%;
+    border-radius: 12px;
+  }
+
+  #modalTitulo {
+    font-size: 2.5rem;
+  }
+
+  #modalMensagem {
+    font-size: 1.3rem;
+    margin-bottom: 24px;
+  }
+
+  #modalCloseBtn {
+    font-size: 22px;
+    top: 10px;
+    right: 14px;
+  }
+}
+.quantidade {
+  display: block;
+  font-size: 17px;
+  font-weight: 500;
+  color: #6a4e1a;
+  line-height: 1.65;
+  letter-spacing: 0.025em;
 }
