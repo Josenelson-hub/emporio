@@ -36,7 +36,7 @@ fetch('json/produtos.json')
 
     const filtrarGrupo = grupo => {
       all.forEach(p => p.style.display = 'none');
-      (grupo || all).forEach(p => p.style.display = 'block');
+      (grupo || all).forEach(p => p.style.display = 'flex');
     };
 
     buttons.doceBtn.onclick = () => filtrarGrupo(groups.doces);
