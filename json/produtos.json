@@ -1,125 +1,124 @@
 [
     {
       "classe": "doces",
-      "nome": "doce de leite",
+      "nome": "Doce de leite",
       "valor": 12.99,
       "img": "img/doces.jpeg"
     },
     {
       "classe": "doces",
-      "nome": "brigadeiro",
+      "nome": "Doce de leite c goiabada",
       "valor": 8.50,
       "img": "img/doces.jpeg"
     },
     {
       "classe": "doces",
-      "nome": "beijinho",
+      "nome": "Doce de leite c amendoim",
       "valor": 7.99,
       "img": "img/doces.jpeg"
     },
     {
       "classe": "doces",
-      "nome": "quindim",
+      "nome": "Doce de leite c morango",
       "valor": 9.99,
       "img": "img/doces.jpeg"
     },
     {
       "classe": "doces",
-      "nome": "cocada",
+      "nome": "Creme de coco",
       "valor": 10.50,
       "img": "img/doces.jpeg"
     },
     {
       "classe": "doces",
-      "nome": "pudim de leite",
+      "nome": "Creme de coco c morango",
       "valor": 15.00,
       "img": "img/doces.jpeg"
     },
     {
       "classe": "doces",
-      "nome": "bolo de chocolate",
+      "nome": "Creme de coco c café",
       "valor": 18.75,
       "img": "img/doces.jpeg"
     },
-  
+    {
+      "classe": "doces",
+      "nome": "Pé de muleque",
+      "valor": 8.00,
+      "img": "img/doces.jpeg"
+    },
+    {
+      "classe": "doces",
+      "nome": "Paçoca",
+      "valor": 35.00,
+      "img": "img/doces.jpeg"
+    },
     {
       "classe": "queijos",
       "nome": "Queijo Minas",
       "valor": 25.50,
-      "img": "img/manteiga.jpeg"
+      "img": "img/queijos.jpeg"
     },
     {
       "classe": "queijos",
       "nome": "Queijo Prato",
       "valor": 27.00,
-      "img": "img/manteiga.jpeg"
+      "img": "img/queijos.jpeg"
     },
     {
       "classe": "queijos",
       "nome": "Queijo Parmesão",
       "valor": 40.00,
-      "img": "img/manteiga.jpeg"
+      "img": "img/queijos.jpeg"
     },
     {
       "classe": "queijos",
       "nome": "Queijo Gorgonzola",
       "valor": 45.00,
-      "img": "img/manteiga.jpeg"
+      "img": "img/queijos.jpeg"
     },
     {
       "classe": "queijos",
       "nome": "Queijo Mussarela",
       "valor": 30.00,
-      "img": "img/manteiga.jpeg"
+      "img": "img/queijos.jpeg"
     },
     {
       "classe": "queijos",
       "nome": "Queijo Cottage",
       "valor": 22.00,
-      "img": "img/manteiga.jpeg"
+      "img": "img/queijos.jpeg"
     },
     {
       "classe": "queijos",
       "nome": "Queijo Ricota",
       "valor": 20.00,
-      "img": "img/manteiga.jpeg"
+      "img": "img/queijos.jpeg"
     },
   
     {
       "classe": "outros",
-      "nome": "Bolo de Cenoura",
+      "nome": "Iorgute natural c morango",
       "valor": 18.75,
       "img": "img/queijos.jpeg"
     },
     {
       "classe": "outros",
-      "nome": "Pão Artesanal",
+      "nome": "Iorgute natural",
       "valor": 12.00,
       "img": "img/queijos.jpeg"
     },
     {
       "classe": "outros",
-      "nome": "Cuca de Maçã",
+      "nome": "Iorgute natural c coco",
       "valor": 20.50,
       "img": "img/queijos.jpeg"
     },
     {
       "classe": "outros",
-      "nome": "Geléia Caseira",
+      "nome": "Manteiga",
       "valor": 15.00,
-      "img": "img/queijos.jpeg"
-    },
-    {
-      "classe": "outros",
-      "nome": "Chá Natural",
-      "valor": 8.00,
-      "img": "img/queijos.jpeg"
-    },
-    {
-      "classe": "outros",
-      "nome": "Mel Silvestre",
-      "valor": 35.00,
-      "img": "img/queijos.jpeg"
+      "img": "img/manteiga.jpeg"
     },
     {
       "classe": "outros",
