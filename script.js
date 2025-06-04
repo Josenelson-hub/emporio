@@ -115,12 +115,15 @@ fetch('json/produtos.json')
       }, {});
 
       modalMensagem.innerHTML = Object.entries(contagem).map(([nome, qtd]) =>
-        `<p>
-          <strong>•</strong> ${nome} (${qtd}x)
-          <button class="remove-modal" data-nome="${nome}" style="margin-left:8px; cursor:pointer; background:none; border:none;">
-            <img class="remove-icon" src="img/remove.png" alt="Remover" style="width:16px; height:16px;">
-          </button>
-        </p>`
+        ` <div class="shop-container">
+            <p>
+              <strong>•</strong> ${nome} (${qtd}x)
+            </p>
+            <button class="remove-modal" data-nome="${nome}" style="margin-left:8px; cursor:pointer; background:none; border:none;">
+              <img class="remove-icon" src="img/remove.png" alt="Remover">
+            </button>
+          </div>
+        `
       ).join('');
 
       modalMensagem.querySelectorAll('.remove-modal').forEach(btn =>
